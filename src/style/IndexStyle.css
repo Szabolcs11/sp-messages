@@ -1,0 +1,84 @@
+.Index-Container {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    justify-content: space-around;
+    align-items: center;
+}
+
+.Index-Header {
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+.Rooms {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vh;
+    overflow: scroll;
+}
+
+/* .RoomContainer {
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    background-color: beige;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 7px;
+} */
+
+/* .Chat-Container {
+    background-color: aquamarine;
+    width: 40vw;
+    height: 70vh;
+    display: flex;
+}
+
+.Chat-Container {
+    position: relative;
+}
+
+.Chat-Messages {
+    background-color: rebeccapurple;
+    width: 100%;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.Chat-Message-Container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+
+.Chat-Control {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.Chat-Input {
+    width: 80%;
+}
+.Chat-Button {
+    width: 20%;
+    background-color: blanchedalmond;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+} */

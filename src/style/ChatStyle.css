@@ -1,0 +1,36 @@
+.Chat-Container {
+    background-color: aquamarine;
+    width: 40vw;
+    height: 70vh;
+    display: flex;
+}
+
+.Chat-Container {
+    position: relative;
+}
+
+@media only screen and (max-width: 1000px) {
+    .Chat-Container {
+        width: 60vw;
+    }
+}
+
+
+.Chat-Control {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.Chat-Input {
+    width: 80%;
+}
+.Chat-Button {
+    width: 20%;
+    background-color: blanchedalmond;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

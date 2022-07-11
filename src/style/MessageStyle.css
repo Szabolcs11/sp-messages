@@ -1,0 +1,13 @@
+.Chat-Messages {
+    background-color: rgb(94, 88, 82);
+    width: 100%;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.Chat-Message-Container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}

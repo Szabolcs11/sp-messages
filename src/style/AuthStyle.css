@@ -1,0 +1,59 @@
+.Auth-Bg {
+    /* background-color: blanchedalmond; */
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 500px;
+}
+
+.Auth-Title {
+    display: flex;
+    justify-content: center;
+    font-size: larger;
+    font-family: 800;
+}
+
+.Auth-Inputs {
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+    /* justify-content: space-between; */
+    /* justify-content: space-evenly; */
+    flex-direction: column;
+    height: 100px;
+}
+
+.Auth-Inputs>input {
+    outline: none;
+    border:none;
+    background-image:none;
+    background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;  
+
+    height: 30px;
+    width: 200px;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: black;
+}
+
+.Auth-Button-Container {
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    width: 200px;
+}
+
+.Auth-Button {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #427AA1;
+    border-radius: 5px;
+    color: antiquewhite;
+}

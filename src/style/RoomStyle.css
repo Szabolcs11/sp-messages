@@ -1,0 +1,12 @@
+.RoomContainer {
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    background-color: beige;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 7px;
+    cursor: pointer;
+}
