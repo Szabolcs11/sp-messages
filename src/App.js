@@ -34,6 +34,7 @@ const client = new ApolloClient({
   link
 })
 
+
 function App() {
   const [user, setUser] = useState(null)
   const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);

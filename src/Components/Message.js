@@ -13,6 +13,14 @@ function Message(props) {
         </div>
     </div>
   )
+  // return (
+  //   <div className='Chat-Message-Container'>
+  //       <div className='Chat-Message'>
+  //           {sendername}: [{datetime}]
+  //       </div>
+  //       <img src='http://localhost:1337/uploads/thumbnail_10x_featured_social_media_image_size_0108b0c4a7.png?width=780&height=460' />
+  //   </div>
+  // )
 }
 
 export default Message

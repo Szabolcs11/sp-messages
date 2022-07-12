@@ -4,6 +4,9 @@ import Style from './../style/IndexStyle.css'
 import Chat from '../Components/Chat'
 import { useQuery, gql } from "@apollo/client"
 import Room from '../Components/Room'
+import Subscription from '../Components/Subscription'
+
+
 
 
 function Index(props) {
@@ -14,6 +17,8 @@ function Index(props) {
               <input type="text" />
           </div>
           <Chat UserDatas={props.UserDatas}/>
+
+          <Subscription />
       </div>
   )
 }

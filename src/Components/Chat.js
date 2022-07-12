@@ -3,13 +3,14 @@ import Style from './../style/ChatStyle.css'
 import axios from 'axios'
 import MessageComponent from './Message'
 import { v4 as uuid } from 'uuid'
-import { useQuery, gql, useMutation, useSubscription } from "@apollo/client"
+import { useQuery, gql, useMutation, useSubscription, useApolloClient } from "@apollo/client"
 import Room from './Room'
+import FileUpload from './FileUpload'
 
 
 const GETALLMESSAGEFROMEXPRESS = gql`
-query Messages($userId: ID!) {
-    messages(user_id: $userId) {
+query Query($roomId: ID!) {
+    messages(room_id: $roomId) {
       id
       message
       date
@@ -37,55 +38,103 @@ mutation Mutation($input: MessageInput!) {
 `
 
 const SUBSCRIBETOMESSAGES = gql`
-subscription Subscription {
-    messagesent {
+subscription Subscription($roomId: ID!) {
+    messagesent(room_id: $roomId) {
       id
       message
       date
+      roomkey
       sender {
         username
         id
       }
     }
-}
+  }
+`
+
+const GETALLROOMS = gql`
+query Query($userId: ID!) {
+    getrooms(user_id: $userId) {
+      id
+    }
+  }
 `
 
 
 
 function Chat(props) {
+    const client = useApolloClient();
+    // console.log(client.cache)
 
     const [Message, setMessage] = useState([{}])
     const mess = useRef()
 
-    const [CurrentRoomKey, setCurrentRoomKey] = useState()
+    const [CurrentRoomKey, setCurrentRoomKey] = useState("R00MK3Y")
     
 
+
     // UI --(graphqp)--> EXPRESS -> Strapi
-    const { loading, error, data, refetch } = useQuery(GETALLMESSAGEFROMEXPRESS, {variables: {userId: props.UserDatas.id}})
+    const { loading, error, data, refetch } = useQuery(GETALLMESSAGEFROMEXPRESS, {variables: {roomId: CurrentRoomKey}})
+    // const { loading, error, data, refetch } = useQuery(GETALLMESSAGEFROMEXPRESS, {variables: {roomId: props.UserDatas.id}})
     if (data) {
         if (data != Message) {
             setMessage(data)
-            setCurrentRoomKey(data.messages[1].roomkey)
+            // setCurrentRoomKey(data.messages[0].roomkey)
+            // console.log(data.messages[0].roomkey)
         }
     }
-    // console.log(Message)
+    
+    // console.log(props.UserDatas.id)
+    const { rloading, rerror, data: rdata } = useQuery(GETALLROOMS, {variables: {userId: props.UserDatas.id}})
+    // console.log(rdata)
+    // console.log(rdata)
+    // if (rdata) {
+    //     console.log(rdata)
+    //     // console.log(rdata.getrooms[0].id)
+    // }
+
+    // console.log(rdata.getrooms)
+    // if (rdata) {
+    //     console.log(rdata)
+    // }
+
     const [smutateFunction, { sdata, sloading, serror }] = useMutation(SENDMESSAGETOEXPRESS)
 
 
+    // 1. Subscription reactban nem jo \\
+    // 2. Valamiert nem kapom visza a szobakat (Reactban)
+    // 3. Ki kell szurni az ismetlodo szobakat \\
+    // 4. refetch() vagy setMessage(previousState...) ?
+
+    // console.log(client.cache)
+
     // Subscription \\
-    const { smdata, smloading } = useSubscription(
+    const { data: smdata, } = useSubscription(
         SUBSCRIBETOMESSAGES, 
+        {variables: {roomId: CurrentRoomKey}},
+        
         {
             onSubscriptionData: (onsmdata) => {
-                // setMessage(previousState => [...previousState, onsmdata.subscriptionData.data.messagesent])
-                // setMessage(...Message.messages, {id: 1, message: "TEXT", date:"2022-02-22", sender: {username: "asd", id: 1}})
-                refetch()
-                // console.log(onsmdata.subscriptionData.data.messagesent)
-                // data.push( {id: 1, message: "TEXT", date:"2022-02-22", sender: {username: "asd", id: 1}} )
-                // console.log(onsmdata)
+
             }
         }
     )
+
+    useEffect(() => {
+        refetch()
+        // console.log(Message)
+        // if (smdata) {
+        //     // const messages = [
+        //     //     ...Message,
+        //     //     smdata
+        //     // ]
+        //     console.log(smdata)
+        // }
+
+        // setMessage(messages)
+        // console.log(messages)
+    }, [smdata])
+    // console.log(smdata, " SUB ", CurrentRoomKey)
 
     const SendMessage = () => {
         if (CurrentRoomKey) {
@@ -100,14 +149,23 @@ function Chat(props) {
             refetch()
             mess.current.value = ""
         }
+        else {
+            console.log("no room key")
+        }
     }
 
     // const joinroom = () => {
     //     console.log("asd")
     // }
 
-    function joinroom() {
-        console.log("as")
+    function joinroom(roomkey) {
+        console.log(roomkey)
+        setCurrentRoomKey(roomkey)
+        // const { loading, error, data, refetch } = useQuery(GETALLMESSAGEFROMEXPRESS, {variables: {userId: props.UserDatas.id}})
+    }
+
+    const ImageUpload = () => {
+
     }
 
             
@@ -117,7 +175,25 @@ function Chat(props) {
             CurrentRoomKey: {CurrentRoomKey || "Undefined"}
         </div>
             <div className='Rooms'>
-                <Room onClick={joinroom} RoomKey="H5GG7"/>
+                <div className='RoomContainer' onClick={() => joinroom("R00MK3Y")}>
+                    <p>Key: R00MK3Y</p>
+                </div>
+                <div className='RoomContainer' onClick={() => joinroom("ROOM2")}>
+                    <p>Key: ROOM2</p>
+                </div>
+
+                {/* { rdata ?
+                rdata.getrooms.map((r) => {
+                    return (
+                        <div key={uuid()} className='RoomContainer' onClick={() => joinroom(r.id)}>
+                            <p>Key: {r.id}</p>
+                        </div> 
+                    )
+                })
+                :
+                <p>Error loading rooms</p>
+                } */}
+                
             </div>
             <div className='Chat-Container'>
                 <div className='Chat-Messages'>
@@ -146,6 +222,7 @@ function Chat(props) {
                     <div className='Chat-Button' onClick={SendMessage}>
                         Send
                     </div>
+                    <FileUpload />
                 </div>
             </div>
         </>
